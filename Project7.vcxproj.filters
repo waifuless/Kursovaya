@@ -13,27 +13,47 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\users">
+      <UniqueIdentifier>{deeb167b-ce02-4916-b4d3-f260e82f3c18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\users">
+      <UniqueIdentifier>{fec6bc4f-ea23-4a1e-a334-a16b2e3a5584}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Viewer.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Admin.cpp">
+      <Filter>Исходные файлы\users</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewer.cpp">
+      <Filter>Исходные файлы\users</Filter>
+    </ClCompile>
+    <ClCompile Include="Record.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Viewer.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="Admin.h">
+      <Filter>Файлы заголовков\users</Filter>
     </ClInclude>
     <ClInclude Include="IUser.h">
+      <Filter>Файлы заголовков\users</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer.h">
+      <Filter>Файлы заголовков\users</Filter>
+    </ClInclude>
+    <ClInclude Include="Record.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Admin.h">
+    <ClInclude Include="fileName.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="baseOfPatients.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>

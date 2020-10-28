@@ -141,12 +141,18 @@
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Record.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
+    <ClInclude Include="fileName.h" />
     <ClInclude Include="IUser.h" />
+    <ClInclude Include="Record.h" />
     <ClInclude Include="Viewer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="baseOfPatients.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
