@@ -33,6 +33,12 @@
     <ClCompile Include="Record.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Doctor.cpp">
+      <Filter>Исходные файлы\users</Filter>
+    </ClCompile>
+    <ClCompile Include="sha256.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h">
@@ -47,7 +53,13 @@
     <ClInclude Include="Record.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="fileName.h">
+    <ClInclude Include="Doctor.h">
+      <Filter>Файлы заголовков\users</Filter>
+    </ClInclude>
+    <ClInclude Include="sha256.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="fileNames.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

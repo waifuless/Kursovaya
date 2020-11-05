@@ -86,7 +86,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -140,15 +140,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
+    <ClCompile Include="Doctor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Record.cpp" />
+    <ClCompile Include="sha256.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
-    <ClInclude Include="fileName.h" />
+    <ClInclude Include="Doctor.h" />
+    <ClInclude Include="fileNames.h" />
     <ClInclude Include="IUser.h" />
     <ClInclude Include="Record.h" />
+    <ClInclude Include="sha256.h" />
     <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <ItemGroup>

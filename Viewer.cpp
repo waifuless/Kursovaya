@@ -1,9 +1,4 @@
 #include "Viewer.h"
-#include <fstream>
-#include <iostream>
-#include <cstdlib>
-#include "Record.h"
-#include "fileName.h"
 using namespace std;
 
 void Viewer::viewRecords() {

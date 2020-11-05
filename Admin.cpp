@@ -1,9 +1,6 @@
 #include "Admin.h"
-#include <fstream>
-#include <iostream>
-#include <cstdlib>
-#include "Record.h"
-#include "fileName.h"
+const char* baseOfPatientsFile = "baseOfPatients.txt";
+
 using namespace std;
 
 void Admin::viewRecords() {

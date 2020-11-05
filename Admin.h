@@ -1,5 +1,10 @@
 #pragma once
 #include "IUser.h"
+#include <fstream>
+#include <iostream>
+#include <cstdlib>
+#include "Record.h"
+#include "fileNames.h"
 class Admin :
     public IUser
 {

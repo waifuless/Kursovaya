@@ -5,8 +5,7 @@
 #include <cstdlib>
 #include "Record.h"
 #include "fileNames.h"
-
-class Viewer :
+class Doctor :
     public IUser
 {
 public:
