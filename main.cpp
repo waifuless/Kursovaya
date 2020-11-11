@@ -16,6 +16,7 @@ int main() {
 	IUser* user=NULL;
 	bool stillWork;
 	int choice = 0;
+	//создание первого админа потом
 	while (1) {
 		while (1) {  //Цикл выполняется, пока пользователь не выберет выход
 			stillWork = true;

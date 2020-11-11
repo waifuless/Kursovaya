@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include "Record.h"
 #include "fileNames.h"
+#include <vector>
 class Admin :
     public IUser
 {

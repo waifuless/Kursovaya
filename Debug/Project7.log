@@ -1,2 +1,4 @@
-﻿  main.cpp
+﻿  Admin.cpp
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(61,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(68,21): warning C4018: <: несоответствие типов со знаком и без знака
   Project7.vcxproj -> C:\Users\Владимир\source\repos\Project7\Debug\Project7.exe

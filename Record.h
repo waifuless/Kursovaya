@@ -3,11 +3,18 @@
 
 class Record
 {
-	char fullName[100];
-	char date[100];
+	std::string fullName;
+	std::string date;
 public:
-	Record(char fullName[100], char date[100]);
+	Record(std::string fullName, std::string date);
 	Record();
 	void print();
+	void create();
+	void setFullName(std::string fullName);
+	void setDate(std::string date);
+	std::string getFullName();
+	std::string getDate();
+	friend std::ostream& operator<< (std::ostream& out, const Record& record);
+	friend std::istream& operator>> (std::istream& in, Record& record);
 };
 
