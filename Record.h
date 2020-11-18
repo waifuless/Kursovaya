@@ -4,7 +4,11 @@
 class Record
 {
 	std::string fullName;
+	std::string cardNumber;
 	std::string date;
+	std::string time;
+	std::string doctorName;
+	std::string doctorOffice;
 public:
 	Record(std::string fullName, std::string date);
 	Record();

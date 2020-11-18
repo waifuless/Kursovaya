@@ -9,6 +9,7 @@ class Doctor :
     public IUser
 {
 public:
+	std::vector<Record> readVectorOfRecords();
 	void viewRecords();
 	void addRecord();
 	void redactRecord();

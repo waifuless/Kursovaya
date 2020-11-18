@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
+    <ClCompile Include="Authorization.cpp" />
     <ClCompile Include="Doctor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Record.cpp" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
+    <ClInclude Include="Authorization.h" />
     <ClInclude Include="Doctor.h" />
     <ClInclude Include="fileNames.h" />
     <ClInclude Include="IUser.h" />

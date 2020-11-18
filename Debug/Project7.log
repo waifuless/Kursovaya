@@ -1,4 +1,11 @@
 ﻿  Admin.cpp
-C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(61,21): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(68,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(26,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(48,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(68,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(85,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(92,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(121,17): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(128,17): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(136,16): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(181,20): warning C4018: <: несоответствие типов со знаком и без знака
   Project7.vcxproj -> C:\Users\Владимир\source\repos\Project7\Debug\Project7.exe

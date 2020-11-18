@@ -2,6 +2,22 @@
 
 using namespace std;
 
+vector<Record> Doctor::readVectorOfRecords() {
+	Record readRecord;
+	vector<Record> records;
+	ifstream in(baseOfPatientsFile);
+	if (in.is_open()) {
+		while (!in.eof()) {
+			in >> readRecord;
+			if (!in.eof()) {
+				records.push_back(readRecord);
+			}
+		}
+	}
+	in.close();
+	return records;
+}
+
 void Doctor::viewRecords() {
 	Record readRecord;
 	int number = 0;

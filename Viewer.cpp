@@ -1,6 +1,22 @@
 #include "Viewer.h"
 using namespace std;
 
+vector<Record> Viewer::readVectorOfRecords() {
+	Record readRecord;
+	vector<Record> records;
+	ifstream in(baseOfPatientsFile);
+	if (in.is_open()) {
+		while (!in.eof()) {
+			in >> readRecord;
+			if (!in.eof()) {
+				records.push_back(readRecord);
+			}
+		}
+	}
+	in.close();
+	return records;
+}
+
 void Viewer::viewRecords() {
 	Record readRecord;
 	int number = 0;
