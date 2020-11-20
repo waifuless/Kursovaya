@@ -1,6 +1,8 @@
 #include "Viewer.h"
 using namespace std;
 
+const char* Viewer::baseOfUsersFile = NULL;
+
 vector<Record> Viewer::readVectorOfRecords() {
 	Record readRecord;
 	vector<Record> records;

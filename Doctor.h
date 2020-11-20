@@ -8,7 +8,9 @@
 class Doctor :
     public IUser
 {
+	
 public:
+	static const char* baseOfUsersFile;
 	std::vector<Record> readVectorOfRecords();
 	void viewRecords();
 	void addRecord();

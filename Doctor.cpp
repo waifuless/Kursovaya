@@ -1,6 +1,9 @@
 #include "Doctor.h"
 
+const char* Doctor::baseOfUsersFile = "baseOfDoctors.txt";
+
 using namespace std;
+
 
 vector<Record> Doctor::readVectorOfRecords() {
 	Record readRecord;

@@ -1,6 +1,7 @@
 #include "Admin.h"
 
 const char* baseOfPatientsFile = "baseOfPatients.txt";
+const char* Admin::baseOfUsersFile = "baseOfAdmins.txt";
 
 using namespace std;
 
