@@ -16,7 +16,7 @@ public:
     void update(const unsigned char* message, unsigned int len);
     void final(unsigned char* digest);
     static const unsigned int DIGEST_SIZE = (256 / 8);
-
+    static std::string sha256(std::string input);
 protected:
     void transform(const unsigned char* message, unsigned int block_nb);
     unsigned int m_tot_len;

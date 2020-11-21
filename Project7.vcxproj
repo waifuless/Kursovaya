@@ -145,6 +145,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Record.cpp" />
     <ClCompile Include="sha256.cpp" />
+    <ClCompile Include="SortForClasses.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="IUser.h" />
     <ClInclude Include="Record.h" />
     <ClInclude Include="sha256.h" />
+    <ClInclude Include="SortForClasses.h" />
     <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <ItemGroup>

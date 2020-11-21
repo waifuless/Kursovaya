@@ -174,8 +174,13 @@ void Admin::searchRecord() {
 void Admin::sortRecords() {
 	vector<Record> records;
 	int choiceOfField = 0, choiceOfSort = 0;
-	bool (*choosenCompare)(Record a, Record b) = NULL;
+	int (*choosenCompare)(Record& a, Record& b) = NULL;
 	records = readVectorOfRecords();
+	int arrSize = records.size();
+	Record* recordArr = new Record[arrSize];
+	for (int i = 0; i < arrSize; i++) {
+		recordArr[i] = records[i];
+	}
 	cout << endl << "По какому полю необходимо сортировать?"
 		<< endl << "1) ФИО"
 		<< endl << "2) Номер карты"
@@ -191,60 +196,62 @@ void Admin::sortRecords() {
 	switch(choiceOfField) {
 	case 1:
 		if (choiceOfSort == 1) {
-			choosenCompare = [](Record a, Record b) {return a.getFullName() < b.getFullName();};
+			choosenCompare = RecordCompare::compare_fullName_ASC;
 		}
 		else {
-			choosenCompare = [](Record a, Record b) {return a.getFullName() > b.getFullName();};
+			choosenCompare = RecordCompare::compare_fullName_DESC;
 		}
 		break;
 	case 2:
 		if (choiceOfSort == 1) {
-			choosenCompare = [](Record a, Record b) {return a.getCardNumber() < b.getCardNumber();};
+			choosenCompare = RecordCompare::compare_cardNumber_ASC;
 		}
 		else {
-			choosenCompare = [](Record a, Record b) {return a.getCardNumber() > b.getCardNumber();};
+			choosenCompare = RecordCompare::compare_cardNumber_DESC;
 		}
 		break;
 	case 3:
 		if (choiceOfSort == 1) {
-			choosenCompare = [](Record a, Record b) {return a.getDate() < b.getDate(); };
+			choosenCompare = RecordCompare::compare_date_ASC;
 		}
 		else {
-			choosenCompare = [](Record a, Record b) {return a.getDate() > b.getDate(); };
+			choosenCompare = RecordCompare::compare_date_DESC;
 		}
 		break;
 	case 4:
 		if (choiceOfSort == 1) {
-			choosenCompare = [](Record a, Record b) {return a.getTime() < b.getTime(); };
+			choosenCompare = RecordCompare::compare_time_ASC;
 		}
 		else {
-			choosenCompare = [](Record a, Record b) {return a.getTime() > b.getTime(); };
+			choosenCompare = RecordCompare::compare_time_DESC;
 		}
 		break;
 	case 5:
 		if (choiceOfSort == 1) {
-			choosenCompare = [](Record a, Record b) {return a.getDoctorName() < b.getDoctorName(); };
+			choosenCompare = RecordCompare::compare_doctorName_ASC;
 		}
 		else {
-			choosenCompare = [](Record a, Record b) {return a.getDoctorName() > b.getDoctorName(); };
+			choosenCompare = choosenCompare = RecordCompare::compare_doctorName_DESC;
 		}
 		break;
 	case 6:
 		if (choiceOfSort == 1) {
-			choosenCompare = [](Record a, Record b) {return a.getDoctorOffice() < b.getDoctorOffice(); };
+			choosenCompare = RecordCompare::compare_doctorOffice_ASC;
 		}
 		else {
-			choosenCompare = [](Record a, Record b) {return a.getDoctorOffice() > b.getDoctorOffice(); };
+			choosenCompare = RecordCompare::compare_doctorOffice_DESC;
 		}
 		break;
 	}
-	sort(records.begin(), records.end(), choosenCompare);
+	SortForClasses<Record>::selection_sort(recordArr, 0, arrSize, choosenCompare);
 	ofstream out(baseOfPatientsFile);
-	for (int i = 0; i < records.size(); i++) {
-		records[i].print();
+	for (int i = 0; i < arrSize; i++) {
+		cout << i + 1 << ')';
+		recordArr[i].print();
 		out << records[i];
 	}
 	out.close();
+	delete[]recordArr;
 }
 
 void Admin::filterRecords() { //placeholder можно потом фильтровать по врачу, например

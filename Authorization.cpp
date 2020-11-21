@@ -49,7 +49,7 @@ bool Authorization::createAccount(const char* fileName) {
         }
     } while (password != password2);
 
-    file << login << std::endl << sha256(password+salt)<<std::endl;
+    file << login << std::endl << SHA256::sha256(password+salt)<<std::endl;
     std::cout << std::endl;
     if (file.is_open()) {
         file.close();
@@ -75,7 +75,6 @@ bool Authorization::singIn(const char* fileName) {
         return false;
     }
     while (resultOfAuthorization!=true) {
-        //if (!file.is_open()) file.open(fileName);
         login.clear();
         password.clear();
         std::cout << std::endl << "¬ведите логин : ";
@@ -88,15 +87,13 @@ bool Authorization::singIn(const char* fileName) {
         }
         file.clear();
         file.seekg(0, file.beg);
-        //std::cout << file.tellg();
         while (!file.eof()) {
             file >> readLogin;
             file >> readPassword;
-            if (login == readLogin && sha256(password + salt) == readPassword) {
+            if (login == readLogin && SHA256::sha256(password + salt) == readPassword) {
                 resultOfAuthorization = true;
                 break;
             }
-            //std::cout <<std::endl<< file.tellg();
         }
         if (resultOfAuthorization != true) {
             std::cout << std::endl << "Ћогин или пароль не совпали";
@@ -105,7 +102,6 @@ bool Authorization::singIn(const char* fileName) {
             std::cin >> choice;
             if (choice == 2) break;
         }
-        //file.close(); //
     }
     if (file.is_open()) {
         file.close();

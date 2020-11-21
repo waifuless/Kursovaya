@@ -8,6 +8,8 @@
 #include <algorithm>
 #include <regex>
 #include <vector>
+#include "SortForClasses.h"
+
 class Admin :
     public IUser
 {
