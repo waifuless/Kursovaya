@@ -32,6 +32,7 @@ void Admin::viewRecords() {
 
 void Admin::addRecord() {
 	Record newRecord;
+	cin.get();
 	newRecord.create();
 	ofstream out(baseOfPatientsFile, ios::app);
 	if (out.is_open()) {
@@ -43,7 +44,7 @@ void Admin::addRecord() {
 
 void Admin::redactRecord() {
 	int choiceOfRecord = 0, choiceOfField = 0;
-	string newData;
+	char newData[150];
 	vector<Record> records;
 	records = readVectorOfRecords();
 	for (int i = 0; i < records.size(); i++) {
@@ -53,16 +54,29 @@ void Admin::redactRecord() {
 	cout << "Введите номер записи ";
 	cin >> choiceOfRecord;
 	cout << endl << "Какое поле необходимо изменить?"
-		<<endl<<"1) ФИО"
-		<<endl<<"2) Дату приема"<<endl;
+		<< endl << "1) ФИО"
+		<< endl << "2) Номер карты"
+		<< endl << "3) Дату приема"
+		<< endl << "4) Время приема"
+		<< endl << "5) ФИО врача"
+		<< endl << "6) Кабинет" << endl;
 	cin >> choiceOfField;
 	cout << "Введите новые данные: "<<endl;
 	cin.get();
-	getline(cin, newData);
+	std::cin.getline(newData, 150);
+	OemToCharA(newData, newData);
 	switch (choiceOfField) {
 	case 1: records[choiceOfRecord - 1].setFullName(newData);
 		break;
-	case 2: records[choiceOfRecord - 1].setDate(newData);
+	case 2: records[choiceOfRecord - 1].setCardNumber(newData);
+		break;
+	case 3: records[choiceOfRecord - 1].setDate(newData);
+		break;
+	case 4: records[choiceOfRecord - 1].setTime(newData);
+		break;
+	case 5: records[choiceOfRecord - 1].setDoctorName(newData);
+		break;
+	case 6: records[choiceOfRecord - 1].setDoctorOffice(newData);
 		break;
 	}
 	ofstream out(baseOfPatientsFile);
@@ -103,35 +117,52 @@ void Admin::deleteRecord() {
 	}
 }
 
-void Admin::serchRecord() {
+void Admin::searchRecord() {
 	vector<Record> records;
 	records = readVectorOfRecords();
 	vector<Record> foundRecords;
 	int i, choiceOfField = 0;
 	string searchData, currentData;
+	char buffData[150];
+	std::string(Record::*getSomeData)()=NULL; //указатель на метод класса Record
 	cout << endl << "По какому полю необходимо произвести поиск?"
 		<< endl << "1) ФИО"
-		<< endl << "2) Дату приема" << endl;
+		<< endl << "2) Номер карты"
+		<< endl << "3) Дату приема"
+		<< endl << "4) Время приема"
+		<< endl << "5) ФИО врача"
+		<< endl << "6) Кабинет" << endl;
 	cin >> choiceOfField;
 	cout << endl << "Введите данные для поиска" << endl;
 	cin.get();
-	getline(cin, searchData);
+	std::cin.getline(buffData, 150);
+	OemToCharA(buffData, buffData);
+	searchData = buffData;
 	regex searchRegex("([\\w- ])*(^|-|\\b|_)(" + searchData + ")($|-|\\b|_)([\\w- ])*");
 	switch (choiceOfField) {
 	case 1:
-		for (i = 0; i < records.size(); i++) {
-			currentData = records[i].getFullName();
-			if (regex_match(currentData.begin(), currentData.end(), searchRegex))
-				foundRecords.push_back(records[i]);
-		}
+		getSomeData = &Record::getFullName;
 		break;
 	case 2:
-		for (i = 0; i < records.size(); i++) {
-			currentData = records[i].getDate();
-			if (regex_match(currentData.begin(), currentData.end(), searchRegex))
-				foundRecords.push_back(records[i]);
-		}
+		getSomeData = &Record::getCardNumber;
 		break;
+	case 3:
+		getSomeData = &Record::getDate;
+		break;
+	case 4:
+		getSomeData = &Record::getTime;
+		break;
+	case 5:
+		getSomeData = &Record::getDoctorName;
+		break;
+	case 6:
+		getSomeData = &Record::getDoctorOffice;
+		break;
+	}
+	for (i = 0; i < records.size(); i++) {
+		currentData = (&records[i]->*getSomeData)();
+		if (regex_match(currentData.begin(), currentData.end(), searchRegex))
+			foundRecords.push_back(records[i]);
 	}
 	cout << endl << "количество объектов - " << foundRecords.size() << endl;
 	for (i = 0; i < foundRecords.size(); i++) {
@@ -143,10 +174,15 @@ void Admin::serchRecord() {
 void Admin::sortRecords() {
 	vector<Record> records;
 	int choiceOfField = 0, choiceOfSort = 0;
+	bool (*choosenCompare)(Record a, Record b) = NULL;
 	records = readVectorOfRecords();
 	cout << endl << "По какому полю необходимо сортировать?"
 		<< endl << "1) ФИО"
-		<< endl << "2) Дату приема" << endl;
+		<< endl << "2) Номер карты"
+		<< endl << "3) Дату приема"
+		<< endl << "4) Время приема"
+		<< endl << "5) ФИО врача"
+		<< endl << "6) Кабинет" << endl;
 	cin >> choiceOfField;
 	cout << endl << "Каким образом?"
 		<< endl << "1) По возрастанию"
@@ -155,31 +191,57 @@ void Admin::sortRecords() {
 	switch(choiceOfField) {
 	case 1:
 		if (choiceOfSort == 1) {
-			sort(records.begin(), records.end(), [](Record a, Record b) {
-				return a.getFullName() < b.getFullName();
-				});
+			choosenCompare = [](Record a, Record b) {return a.getFullName() < b.getFullName();};
 		}
 		else {
-			sort(records.begin(), records.end(), [](Record a, Record b) {
-				return a.getFullName() > b.getFullName();
-				});
+			choosenCompare = [](Record a, Record b) {return a.getFullName() > b.getFullName();};
 		}
 		break;
 	case 2:
 		if (choiceOfSort == 1) {
-			sort(records.begin(), records.end(), [](Record a, Record b) {
-				return a.getDate() < b.getDate();
-				});
+			choosenCompare = [](Record a, Record b) {return a.getCardNumber() < b.getCardNumber();};
 		}
 		else {
-			sort(records.begin(), records.end(), [](Record a, Record b) {
-				return a.getDate() > b.getDate();
-				});
+			choosenCompare = [](Record a, Record b) {return a.getCardNumber() > b.getCardNumber();};
+		}
+		break;
+	case 3:
+		if (choiceOfSort == 1) {
+			choosenCompare = [](Record a, Record b) {return a.getDate() < b.getDate(); };
+		}
+		else {
+			choosenCompare = [](Record a, Record b) {return a.getDate() > b.getDate(); };
+		}
+		break;
+	case 4:
+		if (choiceOfSort == 1) {
+			choosenCompare = [](Record a, Record b) {return a.getTime() < b.getTime(); };
+		}
+		else {
+			choosenCompare = [](Record a, Record b) {return a.getTime() > b.getTime(); };
+		}
+		break;
+	case 5:
+		if (choiceOfSort == 1) {
+			choosenCompare = [](Record a, Record b) {return a.getDoctorName() < b.getDoctorName(); };
+		}
+		else {
+			choosenCompare = [](Record a, Record b) {return a.getDoctorName() > b.getDoctorName(); };
+		}
+		break;
+	case 6:
+		if (choiceOfSort == 1) {
+			choosenCompare = [](Record a, Record b) {return a.getDoctorOffice() < b.getDoctorOffice(); };
+		}
+		else {
+			choosenCompare = [](Record a, Record b) {return a.getDoctorOffice() > b.getDoctorOffice(); };
 		}
 		break;
 	}
+	sort(records.begin(), records.end(), choosenCompare);
 	ofstream out(baseOfPatientsFile);
 	for (int i = 0; i < records.size(); i++) {
+		records[i].print();
 		out << records[i];
 	}
 	out.close();
@@ -191,9 +253,14 @@ void Admin::filterRecords() { //placeholder можно потом фильтровать по врачу, на
 	vector<Record> foundRecords;
 	int i, choiceOfField = 0;
 	string searchData, currentData;
-	cout << endl << "По какому полю необходимо произвести фильрацию?"
+	std::string(Record:: * getSomeData)() = NULL; //указатель на метод класса Record
+	cout << endl << "По какому полю необходимо произвести поиск?"
 		<< endl << "1) ФИО"
-		<< endl << "2) Дату приема" << endl;
+		<< endl << "2) Номер карты"
+		<< endl << "3) Дату приема"
+		<< endl << "4) Время приема"
+		<< endl << "5) ФИО врача"
+		<< endl << "6) Кабинет" << endl;
 	cin >> choiceOfField;
 	cout << endl << "Введите данные для поиска" << endl;
 	cin.get();
@@ -201,19 +268,28 @@ void Admin::filterRecords() { //placeholder можно потом фильтровать по врачу, на
 	regex searchRegex("([\\w- ])*(^|-|\\b|_)(" + searchData + ")($|-|\\b|_)([\\w- ])*");
 	switch (choiceOfField) {
 	case 1:
-		for (i = 0; i < records.size(); i++) {
-			currentData = records[i].getFullName();
-			if (regex_match(currentData.begin(), currentData.end(), searchRegex))
-				foundRecords.push_back(records[i]);
-		}
+		getSomeData = &Record::getFullName;
 		break;
 	case 2:
-		for (i = 0; i < records.size(); i++) {
-			currentData = records[i].getDate();
-			if (regex_match(currentData.begin(), currentData.end(), searchRegex))
-				foundRecords.push_back(records[i]);
-		}
+		getSomeData = &Record::getCardNumber;
 		break;
+	case 3:
+		getSomeData = &Record::getDate;
+		break;
+	case 4:
+		getSomeData = &Record::getTime;
+		break;
+	case 5:
+		getSomeData = &Record::getDoctorName;
+		break;
+	case 6:
+		getSomeData = &Record::getDoctorOffice;
+		break;
+	}
+	for (i = 0; i < records.size(); i++) {
+		currentData = (&records[i]->*getSomeData)();
+		if (regex_match(currentData.begin(), currentData.end(), searchRegex))
+			foundRecords.push_back(records[i]);
 	}
 	cout << endl << "количество объектов - " << foundRecords.size() << endl;
 	for (i = 0; i < foundRecords.size(); i++) {

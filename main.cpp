@@ -94,7 +94,7 @@ int main() {
 				break;
 			case 4:	user->deleteRecord();
 				break;
-			case 5:user->serchRecord();
+			case 5:user->searchRecord();
 				break;
 			case 6: user->sortRecords();
 				break;

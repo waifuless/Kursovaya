@@ -75,6 +75,7 @@ bool Authorization::singIn(const char* fileName) {
         return false;
     }
     while (resultOfAuthorization!=true) {
+        //if (!file.is_open()) file.open(fileName);
         login.clear();
         password.clear();
         std::cout << std::endl << "¬ведите логин : ";
@@ -85,6 +86,9 @@ bool Authorization::singIn(const char* fileName) {
             password.push_back(c);
             _putch('*');
         }
+        file.clear();
+        file.seekg(0, file.beg);
+        //std::cout << file.tellg();
         while (!file.eof()) {
             file >> readLogin;
             file >> readPassword;
@@ -92,6 +96,7 @@ bool Authorization::singIn(const char* fileName) {
                 resultOfAuthorization = true;
                 break;
             }
+            //std::cout <<std::endl<< file.tellg();
         }
         if (resultOfAuthorization != true) {
             std::cout << std::endl << "Ћогин или пароль не совпали";
@@ -100,7 +105,10 @@ bool Authorization::singIn(const char* fileName) {
             std::cin >> choice;
             if (choice == 2) break;
         }
+        //file.close(); //
     }
-    file.close();
+    if (file.is_open()) {
+        file.close();
+    }
     return resultOfAuthorization;
 }

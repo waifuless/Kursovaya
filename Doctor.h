@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include "Record.h"
 #include "fileNames.h"
+#include "Admin.h"
 class Doctor :
     public IUser
 {
@@ -16,7 +17,7 @@ public:
 	void addRecord();
 	void redactRecord();
 	void deleteRecord();
-	void serchRecord();
+	void searchRecord();
 	void sortRecords();
 	void filterRecords();
 };

@@ -11,15 +11,15 @@
 class Admin :
     public IUser
 {
-	
+
 public:
-	static const char* baseOfUsersFile;
-	std::vector<Record> readVectorOfRecords();
+	 static const char* baseOfUsersFile;
+	 std::vector<Record> readVectorOfRecords();
 	 void viewRecords();
 	 void addRecord();
 	 void redactRecord();
 	 void deleteRecord();
-	 void serchRecord();
+	 void searchRecord();
 	 void sortRecords();
 	 void filterRecords();
 };

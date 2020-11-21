@@ -1,3 +1,12 @@
-﻿  main.cpp
-C:\Users\Владимир\source\repos\Project7\Project7\main.cpp(8,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+﻿  Admin.cpp
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(27,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(50,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(83,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(100,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(107,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(162,16): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(168,16): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(243,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(289,16): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Владимир\source\repos\Project7\Project7\Admin.cpp(295,16): warning C4018: <: несоответствие типов со знаком и без знака
   Project7.vcxproj -> C:\Users\Владимир\source\repos\Project7\Debug\Project7.exe
