@@ -1,8 +1,9 @@
 #include "Authorization.h"
 
-static std::string salt = "2dVg7WYC";
+static std::string salt = "2dVg7WYC";   //соль - это то, что мы добавляем к паролю перед шифровкой.
+//нужно для того, чтобы при получении хешей паролей, злоумышленник не смог подобрать пароль с помощью радужный таблиц
 
-bool Authorization::isUserExist(const char* fileName) {
+bool Authorization::isUserExist(const char* fileName) { //функция проверяет, создан ли хоть один пользователь переданного типа доступа
     std::fstream file(fileName);
     if (!file.is_open()) std::cout<<std::endl<< "Файл не открылся\n";
     else if (file.peek() != EOF) return true; // если первый символ конец файла
@@ -10,7 +11,7 @@ bool Authorization::isUserExist(const char* fileName) {
 }
 
 
-bool Authorization::createAccount(const char* fileName) {
+bool Authorization::createAccount(const char* fileName) { //Функция создает аккаунт, сохраняет хеш пароля и логин в файл
     std::ofstream file(fileName, std::ios::app);
     if (!file.is_open()) {
         std::cout << std::endl << "Файл не открылся\n";
@@ -49,7 +50,7 @@ bool Authorization::createAccount(const char* fileName) {
         }
     } while (password != password2);
 
-    file << login << std::endl << SHA256::sha256(password+salt)<<std::endl;
+    file << login << std::endl << SHA256::sha256(password+salt)<<std::endl; //шифруем и сохраняем
     std::cout << std::endl;
     if (file.is_open()) {
         file.close();
@@ -57,7 +58,7 @@ bool Authorization::createAccount(const char* fileName) {
     return true;
 }
 
-bool Authorization::singIn(const char* fileName) {
+bool Authorization::singIn(const char* fileName) {  //функция входа в аккаунт. Возвражает true, если пользователь смог зайти в профиль
     std::string login;
     std::string password;
     std::string readLogin;

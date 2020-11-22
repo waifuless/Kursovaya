@@ -20,7 +20,7 @@ Record::Record() {
 	this->doctorOffice ="unknown";
 }
 
-void Record::print() {
+void Record::print() { //Функция для вывода на экран информации об объекте
 	std::cout << "Полное имя : " <<fullName << std::endl;
 	std::cout << "Номер карты : "<<cardNumber << std::endl;
 	std::cout << "Дата приема : "<<date << std::endl;
@@ -30,17 +30,17 @@ void Record::print() {
 	return;
 }
 
-void Record::create() {
-	std::regex dataRegex("\\d{4}-\\d{2}-\\d{2}");
+void Record::create() { //функция заполнения полей объекта, пользователь вводит все данные с клавиатуры
+	std::regex dataRegex("\\d{4}-\\d{2}-\\d{2}");//с помощью регулярного выражения осуществляется проверка, чтобы пользователь ввел данные в правильном формате
 	std::regex timeRegex("\\d{2}-\\d{2}");
 	char data[150];
 	std::cout << "Введите полное имя " << std::endl;
 	std::cin.getline(data, 150);
-	OemToCharA(data, data);
+	OemToCharA(data, data);  ///перекодировка необходима, т.к. работаем с киррилицей.
 	fullName = data;
 	std::cout << "Введите номер карты" << std::endl;
 	std::cin.getline(data, 150);
-	OemToCharA(data, data);
+	OemToCharA(data, data); ///перекодировка необходима, т.к. работаем с киррилицей.
 	cardNumber = data;
 	do {
 		std::cout << "Введите дату приема(в форме : 20ГГ-ММ-ДД, для корректной работы)" << std::endl;
@@ -68,8 +68,8 @@ void Record::setFullName(std::string fullName) {
 	this->fullName=fullName;
 }
 
-void Record::setDate(std::string date) {
-	std::regex dataRegex("\\d{4}-\\d{2}-\\d{2}");
+void Record::setDate(std::string date) { //Чтобы при перезаписи поля выдерживался нужный формат, проводится проверка 
+	std::regex dataRegex("\\d{4}-\\d{2}-\\d{2}"); //с помощью регулярного выражения
 	if (!std::regex_match(date, dataRegex)) {
 		do {
 			std::cout << "Введите дату приема(в форме : 20ГГ-ММ-ДД, для корректной работы)" << std::endl;
@@ -140,7 +140,7 @@ std::string Record::getDoctorOffice(){
 }
 
 
-std::ostream& operator<< (std::ostream& out, const Record& record) ////используется для работы с файлами, осбенности кодировки
+std::ostream& operator<< (std::ostream& out, const Record& record) ////используется для работы с файлами, возвращает поток, который выводится в файл
 {
 	out << record.fullName << std::endl;
 	out << record.cardNumber << std::endl;
@@ -151,7 +151,7 @@ std::ostream& operator<< (std::ostream& out, const Record& record) ////используе
 	return out;
 }
 
-std::istream& operator>> (std::istream& in, Record& record)  //используется для работы с файлами, особенности
+std::istream& operator>> (std::istream& in, Record& record)  //используется для работы с файлами, читает из потока in информацию в объект
 {
 	getline(in, record.fullName);
 	getline(in, record.cardNumber);

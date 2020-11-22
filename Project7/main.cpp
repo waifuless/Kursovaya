@@ -12,13 +12,13 @@ using namespace std;
 int menu(void);
 
 
-int main() {
+int main() {   
 	setlocale(LC_CTYPE, "rus");
-	IUser* user=NULL;
-	bool stillWork;
-	int choice = 0, choiceUser=0;
+	IUser* user=NULL;  ///Создается указатель на интерфейс, позже этот указатель получит выбранный пользователем объект
+	bool stillWork;  //Таким образом реализуется динамический полиморфизм. Программа решает, какой метод вызвать в зависимости от того, какой объект находится в указателе
+	int choice = 0, choiceUser=0; //во время выполнения программы
 	string choosenFile;
-	if (!Authorization::isUserExist(Admin::baseOfUsersFile)) { //создание при первом входе в систему
+	if (!Authorization::isUserExist(Admin::baseOfUsersFile)) { //создание админа при первом входе в систему
 		cout << "Необходимо создать администратора" << endl;
 		if (Authorization::createAccount(Admin::baseOfUsersFile) == false) {
 			cout << endl << "Не удалось создать администратора";
@@ -135,7 +135,6 @@ int main() {
 }
 
 int menu(void) {
-	//очистить экран
 	int choice = 0;
 	cout <<endl<< "Выберите действие: " << endl
 		<< "1 - Просмотр записей" << endl

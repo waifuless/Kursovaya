@@ -1,6 +1,6 @@
 #include "SortForClasses.h"
 
-int RecordCompare::compare_fullName_ASC(Record& a, Record& b) {
+int RecordCompare::compare_fullName_ASC(Record& a, Record& b) {  //функции для сравнения объектов при сортировке
     int i = 0;
     if (a.getFullName() < b.getFullName())
         i = -1;

@@ -16,7 +16,7 @@ public:
 };
 
 template <class T>
-void SortForClasses<T>::selection_sort(T* a, int left, int right, int(*pf_compare)(T& a, T& b))
+void SortForClasses<T>::selection_sort(T* a, int left, int right, int(*pf_compare)(T& a, T& b)) //Вариант сортировки, где пользователь задает с какого по какой элемент производить сортировку
 {
     for (int i = left + 1; i < right; i++)
         for (int j = i; j > left; j--)
@@ -24,7 +24,7 @@ void SortForClasses<T>::selection_sort(T* a, int left, int right, int(*pf_compar
 }
 
 template <class T>
-void SortForClasses<T>::selection_sort(T* a, int right, int(*pf_compare)(T& a, T& b))
+void SortForClasses<T>::selection_sort(T* a, int right, int(*pf_compare)(T& a, T& b)) //перегруженный вариант сортировки, где пользователь передает только номер последнего элемента для сортировки
 {
 	for (int i = 0 + 1; i < right; i++)
 		for (int j = i; j > 0; j--)
@@ -32,14 +32,14 @@ void SortForClasses<T>::selection_sort(T* a, int right, int(*pf_compare)(T& a, T
 }
 
 template <class T>
-void SortForClasses<T>::compare_swap(T& a, T& b, int(*pf_compare)(T& a, T& b))
+void SortForClasses<T>::compare_swap(T& a, T& b, int(*pf_compare)(T& a, T& b)) //метод сравнивает элементы и вызывает swap 
 {
     if (pf_compare(a, b) > 0)
         swap(a, b);
 }
 
 template <class T>
-void SortForClasses<T>::swap(T& a, T& b)
+void SortForClasses<T>::swap(T& a, T& b) //метод меняет местами объеты в массиве 
 {
     T temp;
     temp = a;
@@ -47,7 +47,7 @@ void SortForClasses<T>::swap(T& a, T& b)
     b = temp;
 }
 
-	namespace RecordCompare {
+	namespace RecordCompare { //пространсво имен, содержащее фунцкии сравнения объектов Record
 		int compare_fullName_ASC(Record& a, Record& b);
 		int compare_cardNumber_ASC(Record& a, Record& b);
 		int compare_date_ASC(Record& a, Record& b);  //реализации сравнения
