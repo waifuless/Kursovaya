@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <windows.h>
+#include <regex>
 
 class Record
 {
@@ -13,7 +14,8 @@ class Record
 	std::string doctorName;
 	std::string doctorOffice;
 public:
-	Record(std::string fullName, std::string date);
+	Record(std::string fullName,std::string cardNumber, std::string date, std::string time, std::string doctorName,
+		std::string doctorOffice);
 	Record();
 	void print();
 	void create();

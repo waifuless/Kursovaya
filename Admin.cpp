@@ -28,11 +28,13 @@ void Admin::viewRecords() {
 		cout << i + 1 << ')';
 		records[i].print();
 	}
+	if (records.size() == 0) {
+		cout << endl << "Записей не существует";
+	}
 	}
 
 void Admin::addRecord() {
 	Record newRecord;
-	cin.get();
 	newRecord.create();
 	ofstream out(baseOfPatientsFile, ios::app);
 	if (out.is_open()) {
@@ -47,12 +49,28 @@ void Admin::redactRecord() {
 	char newData[150];
 	vector<Record> records;
 	records = readVectorOfRecords();
+	if (records.size() == 0) {
+		cout << endl << "Записей не существует";
+		return;
+	}
 	for (int i = 0; i < records.size(); i++) {
 		cout << i + 1 << ')';
 		records[i].print();
 	}
 	cout << "Введите номер записи ";
 	cin >> choiceOfRecord;
+	if (std::cin.fail()) // если предыдущее извлечение оказалось неудачным,
+	{
+		std::cin.clear(); // то возвращаем cin в 'обычный' режим работы
+		std::cin.ignore(32767, '\n'); // и удаляем значения предыдущего ввода из входного буфера
+		std::cout<<endl << "Неправильно введены данные.\n";
+		return;
+	}
+	else { std::cin.ignore(32767, '\n'); } // удаляем лишние значения, на случай, если они есть
+	if (choiceOfRecord > records.size()||choiceOfRecord<0) {
+		cout <<endl<< "Запись под таким номером отсутствует";
+		return;
+	}
 	cout << endl << "Какое поле необходимо изменить?"
 		<< endl << "1) ФИО"
 		<< endl << "2) Номер карты"
@@ -61,8 +79,15 @@ void Admin::redactRecord() {
 		<< endl << "5) ФИО врача"
 		<< endl << "6) Кабинет" << endl;
 	cin >> choiceOfField;
+	if (std::cin.fail()) // если предыдущее извлечение оказалось неудачным,
+	{
+		std::cin.clear(); // то возвращаем cin в 'обычный' режим работы
+		std::cin.ignore(32767, '\n'); // и удаляем значения предыдущего ввода из входного буфера
+		std::cout<<endl << "Неправильно введены данные.\n";
+		return;
+	}
+	else { std::cin.ignore(32767, '\n'); } // удаляем лишние значения, на случай, если они есть
 	cout << "Введите новые данные: "<<endl;
-	cin.get();
 	std::cin.getline(newData, 150);
 	OemToCharA(newData, newData);
 	switch (choiceOfField) {
@@ -77,6 +102,9 @@ void Admin::redactRecord() {
 	case 5: records[choiceOfRecord - 1].setDoctorName(newData);
 		break;
 	case 6: records[choiceOfRecord - 1].setDoctorOffice(newData);
+		break;
+	default: cout<<endl << "Такого поля не существует";
+		return;
 		break;
 	}
 	ofstream out(baseOfPatientsFile);
@@ -94,9 +122,22 @@ void Admin::deleteRecord() {
 		<<endl<< "1 - удалить одну запись"
 		<< endl << "2 - удалить все записи"<<endl;
 	cin >> choice;
+	if (std::cin.fail()) // если предыдущее извлечение оказалось неудачным,
+	{
+		std::cin.clear(); // то возвращаем cin в 'обычный' режим работы
+		std::cin.ignore(32767, '\n'); // и удаляем значения предыдущего ввода из входного буфера
+		std::cout <<endl<< "Неправильно введены данные.\n";
+		return;
+		
+	}
+	else { std::cin.ignore(32767, '\n'); } // удаляем лишние значения, на случай, если они есть
 	switch (choice) {
 	case 1:
 		records = readVectorOfRecords();
+		if (records.size() == 0) {
+			cout << endl << "Записей не существует";
+			return;
+		}
 		for (int i = 0; i < records.size();i++) {
 			cout << i + 1 << ')';
 			records[i].print();
@@ -114,12 +155,22 @@ void Admin::deleteRecord() {
 	case 2:
 		out.open(baseOfPatientsFile, ios::trunc); //trunc чистит файл
 		out.close();
+		cout << endl << "Все записи удалены";
+		break;
+	default: cout << endl << "Такого действия не существует";
+		return;
+		break;
 	}
+	
 }
 
 void Admin::searchRecord() {
 	vector<Record> records;
 	records = readVectorOfRecords();
+	if (records.size() == 0) {
+		cout << endl << "Записей не существует";
+		return;
+	}
 	vector<Record> foundRecords;
 	int i, choiceOfField = 0;
 	string searchData, currentData;
@@ -133,8 +184,15 @@ void Admin::searchRecord() {
 		<< endl << "5) ФИО врача"
 		<< endl << "6) Кабинет" << endl;
 	cin >> choiceOfField;
+	if (std::cin.fail()) // если предыдущее извлечение оказалось неудачным,
+	{
+		std::cin.clear(); // то возвращаем cin в 'обычный' режим работы
+		std::cin.ignore(32767, '\n'); // и удаляем значения предыдущего ввода из входного буфера
+		std::cout <<endl<< "Неправильно введены данные.\n";
+		return;
+	}
+	else { std::cin.ignore(32767, '\n'); }
 	cout << endl << "Введите данные для поиска" << endl;
-	cin.get();
 	std::cin.getline(buffData, 150);
 	OemToCharA(buffData, buffData);
 	searchData = buffData;
@@ -158,6 +216,9 @@ void Admin::searchRecord() {
 	case 6:
 		getSomeData = &Record::getDoctorOffice;
 		break;
+	default: cout << endl << "Такого поля не существует";
+		return;
+		break;
 	}
 	for (i = 0; i < records.size(); i++) {
 		currentData = (&records[i]->*getSomeData)();
@@ -176,6 +237,10 @@ void Admin::sortRecords() {
 	int choiceOfField = 0, choiceOfSort = 0;
 	int (*choosenCompare)(Record& a, Record& b) = NULL;
 	records = readVectorOfRecords();
+	if (records.size() == 0) {
+		cout << endl << "Записей не существует";
+		return;
+	}
 	int arrSize = records.size();
 	Record* recordArr = new Record[arrSize];
 	for (int i = 0; i < arrSize; i++) {
@@ -189,10 +254,32 @@ void Admin::sortRecords() {
 		<< endl << "5) ФИО врача"
 		<< endl << "6) Кабинет" << endl;
 	cin >> choiceOfField;
+	if (std::cin.fail()) // если предыдущее извлечение оказалось неудачным,
+	{
+		std::cin.clear(); // то возвращаем cin в 'обычный' режим работы
+		std::cin.ignore(32767, '\n'); // и удаляем значения предыдущего ввода из входного буфера
+		std::cout <<endl<< "Неправильно введены данные.\n";
+		return;
+
+	}
+	else { std::cin.ignore(32767, '\n'); }
 	cout << endl << "Каким образом?"
 		<< endl << "1) По возрастанию"
 		<< endl << "2) По убыванию" << endl;
 	cin >> choiceOfSort;
+	if (std::cin.fail()) // если предыдущее извлечение оказалось неудачным,
+	{
+		std::cin.clear(); // то возвращаем cin в 'обычный' режим работы
+		std::cin.ignore(32767, '\n'); // и удаляем значения предыдущего ввода из входного буфера
+		std::cout <<endl<< "Неправильно введены данные.\n";
+		return;
+
+	}
+	else { std::cin.ignore(32767, '\n'); }
+	if (choiceOfSort > 2 || choiceOfSort < 1) {
+		cout <<endl<< "Введен неправильный номер сортировки";
+		return;
+	}
 	switch(choiceOfField) {
 	case 1:
 		if (choiceOfSort == 1) {
@@ -242,65 +329,42 @@ void Admin::sortRecords() {
 			choosenCompare = RecordCompare::compare_doctorOffice_DESC;
 		}
 		break;
+	default: cout << endl << "Такого поля не существует";
+		return;
+		break;
 	}
 	SortForClasses<Record>::selection_sort(recordArr, 0, arrSize, choosenCompare);
 	ofstream out(baseOfPatientsFile);
 	for (int i = 0; i < arrSize; i++) {
 		cout << i + 1 << ')';
 		recordArr[i].print();
-		out << records[i];
+		out << recordArr[i];
 	}
 	out.close();
 	delete[]recordArr;
 }
 
-void Admin::filterRecords() { //placeholder можно потом фильтровать по врачу, например
+void Admin::filterRecords() { //фильрация оставляет в базе только записи, моложе заданной даты(тоесть удаляет устаревшие)
 	vector<Record> records;
+	char data[150];
+	string compareData;
 	records = readVectorOfRecords();
-	vector<Record> foundRecords;
-	int i, choiceOfField = 0;
-	string searchData, currentData;
-	std::string(Record:: * getSomeData)() = NULL; //указатель на метод класса Record
-	cout << endl << "По какому полю необходимо произвести поиск?"
-		<< endl << "1) ФИО"
-		<< endl << "2) Номер карты"
-		<< endl << "3) Дату приема"
-		<< endl << "4) Время приема"
-		<< endl << "5) ФИО врача"
-		<< endl << "6) Кабинет" << endl;
-	cin >> choiceOfField;
-	cout << endl << "Введите данные для поиска" << endl;
+	if (records.size() == 0) {
+		cout << endl << "Записей не существует";
+		return;
+	}
+	cout << endl << "Старше какой даты удалить записи?";
+	cout << "Введите дату приема" << std::endl;
 	cin.get();
-	getline(cin, searchData);
-	regex searchRegex("([\\w- ])*(^|-|\\b|_)(" + searchData + ")($|-|\\b|_)([\\w- ])*");
-	switch (choiceOfField) {
-	case 1:
-		getSomeData = &Record::getFullName;
-		break;
-	case 2:
-		getSomeData = &Record::getCardNumber;
-		break;
-	case 3:
-		getSomeData = &Record::getDate;
-		break;
-	case 4:
-		getSomeData = &Record::getTime;
-		break;
-	case 5:
-		getSomeData = &Record::getDoctorName;
-		break;
-	case 6:
-		getSomeData = &Record::getDoctorOffice;
-		break;
+	cin.getline(data, 150);
+	OemToCharA(data, data);
+	compareData = data;
+	ofstream out(baseOfPatientsFile); //При открытии файла, по умолчанию стираются данные в нем
+	///проверка
+	for (int i = 0; i < records.size(); i++) {
+		if (records[i].getDate() > compareData) {
+			out << records[i];						//Заново записываем данные, которые нам нужны
+		}
 	}
-	for (i = 0; i < records.size(); i++) {
-		currentData = (&records[i]->*getSomeData)();
-		if (regex_match(currentData.begin(), currentData.end(), searchRegex))
-			foundRecords.push_back(records[i]);
-	}
-	cout << endl << "количество объектов - " << foundRecords.size() << endl;
-	for (i = 0; i < foundRecords.size(); i++) {
-		cout << i + 1 << ')';
-		foundRecords[i].print();
-	}
+	out.close();
 }

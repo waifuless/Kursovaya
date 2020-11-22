@@ -1,13 +1,23 @@
 #include "Record.h"
 
-Record::Record(std::string fullName, std::string date) {
+Record::Record(std::string fullName, std::string cardNumber, std::string date, std::string time, std::string doctorName,
+	std::string doctorOffice)
+{
 	this->fullName = fullName;
-	this->date = date;														///???
+	this->cardNumber = cardNumber;
+	this->date = date;
+	this->time = time;
+	this->doctorName = doctorName;
+	this->doctorOffice = doctorOffice;
 }
 
 Record::Record() {
-	//fullName; //lol, unknown
-	//date;
+	this->fullName ="unknown";
+	this->cardNumber ="unknown";
+	this->date ="unknown";
+	this->time ="unknown";
+	this->doctorName ="unknown";
+	this->doctorOffice ="unknown";
 }
 
 void Record::print() {
@@ -21,6 +31,8 @@ void Record::print() {
 }
 
 void Record::create() {
+	std::regex dataRegex("\\d{4}-\\d{2}-\\d{2}");
+	std::regex timeRegex("\\d{2}-\\d{2}");
 	char data[150];
 	std::cout << "Введите полное имя " << std::endl;
 	std::cin.getline(data, 150);
@@ -30,13 +42,17 @@ void Record::create() {
 	std::cin.getline(data, 150);
 	OemToCharA(data, data);
 	cardNumber = data;
-	std::cout << "Введите дату приема" << std::endl;
-	std::cin.getline(data, 150);
-	OemToCharA(data, data);
+	do {
+		std::cout << "Введите дату приема(в форме : 20ГГ-ММ-ДД, для корректной работы)" << std::endl;
+		std::cin.getline(data, 150);
+		OemToCharA(data, data);
+	} while (!std::regex_match(data, dataRegex));
 	date = data;
-	std::cout << "Введите время" << std::endl;
-	std::cin.getline(data, 150);
-	OemToCharA(data, data);
+	do {
+		std::cout << "Введите время(в форме : ЧЧ-ММ, для корректной работы)" << std::endl;
+		std::cin.getline(data, 150);
+		OemToCharA(data, data);
+	} while (!std::regex_match(data, timeRegex));
 	time = data;
 	std::cout << "Введите ФИО врача" << std::endl;
 	std::cin.getline(data, 150);
@@ -53,6 +69,13 @@ void Record::setFullName(std::string fullName) {
 }
 
 void Record::setDate(std::string date) {
+	std::regex dataRegex("\\d{4}-\\d{2}-\\d{2}");
+	if (!std::regex_match(date, dataRegex)) {
+		do {
+			std::cout << "Введите дату приема(в форме : 20ГГ-ММ-ДД, для корректной работы)" << std::endl;
+			std::getline(std::cin, date);
+		} while (!std::regex_match(date, dataRegex));
+	}
 	this->date=date;
 }
 
@@ -61,6 +84,13 @@ void Record::setCardNumber(std::string cardNumber) {
 }
 
 void Record::setTime(std::string time){
+	std::regex timeRegex("\\d{2}-\\d{2}");
+	if (!std::regex_match(time, timeRegex)) {
+		do {
+			std::cout << "Введите дату приема(в форме : 20ГГ-ММ-ДД, для корректной работы)" << std::endl;
+			std::getline(std::cin, time);
+		} while (!std::regex_match(time, timeRegex));
+	}
 	this->time = time;
 }
 

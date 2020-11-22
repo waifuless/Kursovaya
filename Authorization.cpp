@@ -100,6 +100,18 @@ bool Authorization::singIn(const char* fileName) {
             std::cout << std::endl << "1) Продолжить ввод";
             std::cout << std::endl << "2) Прекратить ввод"<<std::endl;
             std::cin >> choice;
+            if (std::cin.fail()) // если предыдущее извлечение оказалось неудачным,
+            {
+                std::cin.clear(); // то возвращаем cin в 'обычный' режим работы
+                std::cin.ignore(32767, '\n'); // и удаляем значения предыдущего ввода из входного буфера
+                std::cout <<std::endl<< "Неправильно введена команда"<<std::endl;
+                choice = 2;
+            }
+            else { std::cin.ignore(32767, '\n'); } // удаляем лишние значения, на случай, если они есть
+            if (choice > 2 || choice < 1) {
+                std::cout << std::endl << "Команда не существует";
+                choice = 2;
+            }
             if (choice == 2) break;
         }
     }

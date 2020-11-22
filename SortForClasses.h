@@ -12,7 +12,7 @@ template <class T>
 	static void compare_swap(T& a, T& b, int(*pf_compare)(T& a, T& b));
 public:
 	static void selection_sort(T* a, int left, int right, int (*pfun_compare)(T& a, T& b));
-
+	static void selection_sort(T* a, int right, int (*pfun_compare)(T& a, T& b));
 };
 
 template <class T>
@@ -21,6 +21,14 @@ void SortForClasses<T>::selection_sort(T* a, int left, int right, int(*pf_compar
     for (int i = left + 1; i < right; i++)
         for (int j = i; j > left; j--)
             compare_swap(a[j - 1], a[j], pf_compare);
+}
+
+template <class T>
+void SortForClasses<T>::selection_sort(T* a, int right, int(*pf_compare)(T& a, T& b))
+{
+	for (int i = 0 + 1; i < right; i++)
+		for (int j = i; j > 0; j--)
+			compare_swap(a[j - 1], a[j], pf_compare);
 }
 
 template <class T>
